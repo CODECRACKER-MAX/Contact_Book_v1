@@ -73,6 +73,13 @@ def Add_A_Contact():
     Current_Value = len(ContactBook_Name) - 1
     ContactBook_Address.append(input("Hit Enter To Leave The Address Field Blank!\nEnter The Address Of '{}': ".format(
         ContactBook_Name[Current_Value])))
+    
+    # If Address is Null!
+    if (ContactBook_Address[Current_Value] == ""):
+        ContactBook_Address[Current_Value] = "Null!"
+
+    else:
+        pass
 
     Clear_Screen()
 
@@ -80,22 +87,29 @@ def Add_A_Contact():
     print("The Name Of The Person: {}\nAddress: {}\nPhone Number: {}".format(ContactBook_Name[Current_Value]
                                                                              , ContactBook_Address[Current_Value],
                                                                              ContactBook_Phone_Number[Current_Value]))
+    
+    # If Address is Null!
+    if (ContactBook_Phone_Number[Current_Value] == ""):
+        ContactBook_Phone_Number[Current_Value] = "Null!"
+
+    else:
+        pass
+
 
     print("Saved Successfully! '{}' in your Contact's!\n"
           "Note:: This is not saved in your computer yet but "
           "just in this program,\nAs soon as you close this application. "
           "The data will be removed"
-          "\nIn order to save your data, Please goto main menu and select the option 3,"
+          "\nIn order to save your data, Please goto main menu and select the option 4,"
           "'Save Contacts'\n".format(ContactBook_Name[Current_Value]))
 
-    print("1. To Add More Contact's")
-    print("2. To Goto Main Menu")
-
     def trying():
+        print("1. To Add More Contact's")
+        print("2. To Goto Main Menu")
         try:
             usr_choice = int(input("Enter your choice: "))
         except ValueError:
-            print("ValueError! Going back to main menu")
+            print("ValueError! Please Enter A Choice From The Provided Option's! ")
             trying()
             main()
         if (usr_choice == 1):
@@ -135,20 +149,17 @@ def Delete_Contact2():
 
         if (choice == "y" or choice == "Y"):
             Clear_Screen()
+            
             # If User Really Want's To Delete The Data
             print("Deleting {}'s Contact........".format(ContactBook_Name[Index_Number]))
             time.sleep(1)
             print("Deleted {}'s Contact Successfully!".format(ContactBook_Name[Index_Number]))
 
-            # Using Temporary Names of the names that are contained in the list, So we can easily delete them :D
-            temp_contactbook_name = ContactBook_Name[Index_Number]
-            temp_contactbook_phone = ContactBook_Phone_Number[Index_Number]
-            temp_contactbook_address = ContactBook_Address[Index_Number]
-
-            # Deleting The Contact which user asked us to delete :D
-            ContactBook_Name.remove(temp_contactbook_name)
-            ContactBook_Phone_Number.remove(temp_contactbook_phone)
-            ContactBook_Address.remove(temp_contactbook_address)
+            # Deleting, The Contacts
+            ContactBook_Name.pop(Index_Number)
+            ContactBook_Phone_Number.pop(Index_Number)
+            ContactBook_Address.pop(Index_Number)
+            
             Choice_Loop()
 
 
@@ -174,9 +185,15 @@ def Edit_A_Contact():
     Clear_Screen()
     print("Edit A Contact!")
     Print_All_Contacts()
+    print("Press b and hit enter to go back to main-menu!")
 
     try:
         Index_Number = int(input("Enter the index number of the contact which you want to edit: "))
+        if Index_Number == "b" or Index_Number == "B":
+            main()
+        else:
+            pass
+        
 
     except ValueError:
 
@@ -205,23 +222,26 @@ def Edit_A_Contact():
             Edit_A_Contact()
         elif (change_more == "n" or change_more == "n"):
             main()
+            
 
     if (user_edit == 2):
-        temp_name_change = input("Enter the new address for {}: ".format(ContactBook_Name[Index_Number]))
-        ContactBook_Address[Index_Number] = temp_name_change
+        temp_new_address = input("Enter the new address for {}: ".format(ContactBook_Name[Index_Number]))
+        ContactBook_Address[Index_Number] = temp_new_address
         print("Succesfully changed the address ! ")
         print("The Address after changing: ", ContactBook_Address[Index_Number])
         print("Do you want to change more records y/n? ")
         change_more = input("Enter your choice: ")
+        
         if (change_more == "y" or change_more == "Y"):
             Edit_A_Contact()
         elif (change_more == "n" or change_more == "n"):
             main()
+            
     if (user_edit == 3):
-        temp_name_change = input("Enter the new name for {}: ".format(ContactBook_Name[Index_Number]))
-        ContactBook_Phone_Number[Index_Number] = temp_name_change
+        temp_phonenumber_change = input("Enter a new Phone Number for {}: ".format(ContactBook_Name[Index_Number]))
+        ContactBook_Phone_Number[Index_Number] = temp_phonenumber_change
         print("Succesfully changed the phone number ! ")
-        print("The PhoneNumber after changing: ", ContactBook_Phone_Number[Index_Number])
+        print("The Phone Number after changing: ", ContactBook_Phone_Number[Index_Number])
         print("Do you want to change more records y/n? ")
         change_more = input("Enter your choice: ")
         if (change_more == "y" or change_more == "Y"):
@@ -239,7 +259,7 @@ def Save_All_Contacts():
     print("These are your contact's!")
     Print_All_Contacts()
 
-    print("Do you really wanna save your contact's ?")
+    print("Do you really wanna save your contact's ? y/n")
     user_choice = input("Enter your choice: ")
     if (user_choice == "Y" or user_choice == "y"):
         pass
@@ -294,6 +314,7 @@ def Save_All_Contacts():
             save.write("==========================================================================="
                        "==========================================================================="
                        "=================\n")
+            save.write("Note: Null! means Empty; Having no value. Thus, Those Value Which Are Not Provided By The User!")
 
     save.close()
 
